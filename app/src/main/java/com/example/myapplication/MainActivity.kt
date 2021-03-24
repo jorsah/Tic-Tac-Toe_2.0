@@ -11,6 +11,8 @@ class MainActivity : AppCompatActivity() , UserInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        menuFragment2.newUser = this
+        menuFragment2.listener = this
         mainGame.listener = this
         menuFragment.starter = this
         supportFragmentManager.beginTransaction().add(R.id.container,menuFragment).commit()
@@ -24,5 +26,9 @@ class MainActivity : AppCompatActivity() , UserInterface {
     override fun end(user: User) {
         menuFragment2.user = user
         supportFragmentManager.beginTransaction().replace(R.id.container,menuFragment2).commit()
+    }
+
+    override fun newUser() {
+        supportFragmentManager.beginTransaction().replace(R.id.container,menuFragment).commit()
     }
 }

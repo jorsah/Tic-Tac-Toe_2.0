@@ -35,10 +35,8 @@ class MenuFragment:Fragment() {
 
         button.setOnClickListener {
             val user = User(player1 = p1et.text.toString(),player2 = p2et.text.toString())
-            score1.text = user.n1.toString()
-            score2.text = user.n2.toString()
-            player1.text = p1et.text.toString()
-            player2.text = p2et.text.toString()
+            p1et.setText("")
+            p2et.setText("")
             starter?.start(user)
         }
     }

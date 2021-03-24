@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="#989898"
     tools:context=".MainActivity"
-    tools:ignore="MissingClass">
+    >
 
 
     <TextView
@@ -125,6 +125,7 @@
         android:id="@+id/button"
         android:layout_width="158dp"
         android:layout_height="88dp"
+        android:textColor="@color/black"
         android:layout_marginBottom="203dp"
         android:background="#75575757"
         android:rotationX="5"
