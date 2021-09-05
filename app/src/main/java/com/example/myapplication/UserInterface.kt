@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-interface UserInterface{
+interface UserInterface {
     fun start(user: User)
     fun end(user: User)
     fun newUser()

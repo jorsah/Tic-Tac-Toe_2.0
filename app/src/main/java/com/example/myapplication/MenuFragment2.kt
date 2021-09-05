@@ -8,16 +8,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-class MenuFragment2:Fragment() {
-    var user:User? = null
-    var listener:UserInterface? = null
-    var newUser:UserInterface? = null
+class MenuFragment2 : Fragment() {
+    var user: User? = null
+    var listener: UserInterface? = null
+    var newUser: UserInterface? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.menu_fragment_2,container,false)
+        return inflater.inflate(R.layout.menu_fragment_2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

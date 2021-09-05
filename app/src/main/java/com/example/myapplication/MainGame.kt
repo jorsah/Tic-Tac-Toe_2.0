@@ -9,15 +9,15 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-class MainGame:Fragment() {
-    var user:User? = null
-    var listener:UserInterface? = null
+class MainGame : Fragment() {
+    var user: User? = null
+    var listener: UserInterface? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.game_fragment,container,false)
+        return inflater.inflate(R.layout.game_fragment, container, false)
     }
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
@@ -50,284 +50,99 @@ class MainGame:Fragment() {
 
         val listX = mutableListOf<Int>()
         val listO = mutableListOf<Int>()
-        val winList1 = listOf(1,2,3)
-        val winList2 = listOf(4,5,6)
-        val winList3 = listOf(7,8,9)
-        val winList4 = listOf(1,4,7)
-        val winList5 = listOf(2,5,8)
-        val winList6 = listOf(3,6,9)
-        val winList7 = listOf(3,5,7)
-        val winList8 = listOf(1,5,9)
+        val winLists = listOf(
+            listOf(1, 2, 3),
+            listOf(4, 5, 6),
+            listOf(7, 8, 9),
+            listOf(1, 4, 7),
+            listOf(2, 5, 8),
+            listOf(3, 6, 9),
+            listOf(3, 5, 7),
+            listOf(1, 5, 9)
+        )
+
+        fun xWinCheck(): Boolean {
+            return listX.containsAll(winLists[0]) || listX.containsAll(winLists[1]) || listX.containsAll(
+                winLists[2]
+            ) || listX.containsAll(winLists[3]) ||
+                    listX.containsAll(winLists[4]) || listX.containsAll(winLists[5]) || listX.containsAll(
+                winLists[6]
+            ) || listX.containsAll(winLists[7])
+        }
+
+        fun oWinCheck(): Boolean {
+            return listO.containsAll(winLists[0]) || listO.containsAll(winLists[1]) || listO.containsAll(
+                winLists[2]
+            ) || listO.containsAll(winLists[3]) ||
+                    listO.containsAll(winLists[4]) || listO.containsAll(winLists[5]) || listO.containsAll(
+                winLists[6]
+            ) || listO.containsAll(winLists[7])
+        }
+
+        fun buttonClicked(clk: Int, slot: Int, button: Button) {
+            if (clk % 2 == 1) {
+                listX.add(slot)
+                button.setTextColor(R.color.red)
+                button.text = "X"
+            } else {
+                listO.add(slot)
+                button.text = "O"
+                button.setTextColor(R.color.blue)
+            }
+            if (xWinCheck()) {
+                sc1.text = "${sc1.text.toString().toInt() + 1}"
+                user?.n1 = sc1.text.toString().toInt()
+                user?.let { it1 -> listener?.end(it1) }
+
+
+            }
+            if (oWinCheck()) {
+                sc2.text = "${sc2.text.toString().toInt() + 1}"
+                user?.n2 = sc2.text.toString().toInt()
+                user?.let { it1 -> listener?.end(it1) }
+
+            }
+            if (clk == 9) {
+                user?.let { it1 -> listener?.end(it1) }
+            }
+            button.isClickable = false
+        }
 
         b1.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(1)
-                b1.text = "X"
-                b1.setTextColor(R.color.red)
-            }else{
-                listO.add(1)
-                b1.text = "O"
-                b1.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b1.isClickable = false
+            buttonClicked(click, 1, b1)
         }
         b2.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(2)
-                b2.text = "X"
-                b2.setTextColor(R.color.red)
-            }else{
-                listO.add(2)
-                b2.text = "O"
-                b2.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b2.isClickable = false
+            buttonClicked(click, 2, b2)
         }
         b3.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(3)
-                b3.text = "X"
-                b3.setTextColor(R.color.red)
-            }else{
-                listO.add(3)
-                b3.text = "O"
-                b3.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b3.isClickable = false
+            buttonClicked(click, 3, b3)
         }
         b4.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(4)
-                b4.text = "X"
-                b4.setTextColor(R.color.red)
-            }else{
-                listO.add(4)
-                b4.text = "O"
-                b4.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b4.isClickable = false
+            buttonClicked(click, 4, b4)
         }
         b5.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(5)
-                b5.text = "X"
-                b5.setTextColor(R.color.red)
-            }else{
-                listO.add(5)
-                b5.text = "O"
-                b5.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b5.isClickable = false
+            buttonClicked(click, 5, b5)
         }
         b6.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(6)
-                b6.text = "X"
-                b6.setTextColor(R.color.red)
-            }else{
-                listO.add(6)
-                b6.text = "O"
-                b6.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b6.isClickable = false
+            buttonClicked(click, 6, b6)
         }
         b7.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(7)
-                b7.setTextColor(R.color.red)
-                b7.text = "X"
-            }else{
-                listO.add(7)
-                b7.text = "O"
-                b7.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b7.isClickable = false
+            buttonClicked(click, 7, b7)
         }
         b8.setOnClickListener {
             ++click
-            if (click % 2 == 1){
-                listX.add(8)
-                b8.setTextColor(R.color.red)
-                b8.text = "X"
-            }else{
-                listO.add(8)
-                b8.text = "O"
-                b8.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b8.isClickable = false
+            buttonClicked(click, 8, b8)
         }
         b9.setOnClickListener {
             ++click
-            if (click % 2 == 1) {
-                listX.add(9)
-                b9.setTextColor(R.color.red)
-                b9.text = "X"
-            } else {
-                listO.add(9)
-                b9.text = "O"
-                b9.setTextColor(R.color.blue)
-            }
-            if(listX.containsAll(winList1) || listX.containsAll(winList2) || listX.containsAll(winList3) || listX.containsAll(winList4) ||
-                listX.containsAll(winList5) ||listX.containsAll(winList6) || listX.containsAll(winList7) || listX.containsAll(winList8)){
-                sc1.text = "${sc1.text.toString().toInt()+1}"
-                user?.n1  = sc1.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-
-            }
-            if(listO.containsAll(winList1) || listO.containsAll(winList2) || listO.containsAll(winList3) || listO.containsAll(winList4) ||
-                listO.containsAll(winList5) ||listO.containsAll(winList6) || listO.containsAll(winList7) || listO.containsAll(winList8)){
-                sc2.text = "${sc2.text.toString().toInt()+1}"
-                user?.n2 = sc2.text.toString().toInt()
-                user?.let { it1 -> listener?.end(it1) }
-
-            }
-            if (click == 9){
-                user?.let { it1 -> listener?.end(it1) }
-            }
-            b9.isClickable = false
+            buttonClicked(click, 9, b9)
         }
-
     }
 }
